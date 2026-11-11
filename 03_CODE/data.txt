@@ -1,0 +1,261 @@
+TỪ ĐIỂN DỮ LIỆU VÀ API HỆ THỐNG SUNNY AI FLEX 3D (V2.0)
+PHẦN 1: TOÀN BỘ 16 BẢNG CƠ SỞ DỮ LIỆU (MYSQL)
+(Cột Bắt buộc nghĩa là khi gọi API tạo mới (POST) phải truyền trường đó, nếu không sẽ báo lỗi).
+
+1. Bảng users (Nhân sự & Phân quyền)
+id (INT): Khóa chính
+
+username (VARCHAR): Bắt buộc - Tên đăng nhập (duy nhất)
+
+password_hash (VARCHAR): Bắt buộc - Mật khẩu (mã hóa)
+
+role (ENUM): Bắt buộc - Quyền (giam_doc, ke_toan, to_truong, cong_nhan, ctv)
+
+full_name (VARCHAR): Bắt buộc - Họ tên
+
+status (ENUM): Trạng thái (active, resigned, suspended)
+
+Các trường tùy chọn: dob, gender, cccd, cccd_date, cccd_place, phone, email, permanent_address, current_address, emergency_contact, team_id, position, join_date, contract_type, salary_base, bank_account, bank_name, tax_code, bhxh_code.
+
+2. Bảng partners (Khách hàng & Nhà cung cấp)
+id (INT): Khóa chính
+
+type (ENUM): Bắt buộc - (customer hoặc supplier)
+
+code (VARCHAR): Bắt buộc - Mã KH/NCC (duy nhất)
+
+name (VARCHAR): Bắt buộc - Tên KH/NCC
+
+Các trường tùy chọn: company_name, contact_person, phone, email, tax_code, address, category, bank_account, bank_name, credit_limit (Hạn mức công nợ), payment_term, owner_id, is_active.
+
+3. Bảng items (Vật tư & Thành phẩm)
+id (INT): Khóa chính
+
+type (ENUM): Bắt buộc - (material hoặc product)
+
+code (VARCHAR): Bắt buộc - Mã hàng (duy nhất)
+
+name (VARCHAR): Bắt buộc - Tên hàng
+
+unit (VARCHAR): Bắt buộc - Đơn vị tính (kg, m2, cuộn...)
+
+Các trường tùy chọn: barcode, price_in, price_out, price_floor, min_stock, max_stock, spec_thickness, spec_width, spec_length, weight, location, is_active.
+
+4. Bảng orders (Đơn bán & Đơn mua)
+id (INT): Khóa chính
+
+type (ENUM): Bắt buộc - (sale hoặc purchase)
+
+partner_id (INT): Bắt buộc - ID Khách/NCC
+
+Các trường tùy chọn: code (tự sinh nếu trống), sub_total, discount, tax_amount, shipping_fee, total, paid_amount, payment_status (unpaid, partial, paid), payment_method, status (draft, pending, approved, delivered, done, cancelled), require_full_payment (Cờ chặn nếu chưa trả đủ), delivery_address, due_date, note, created_by, approved_by.
+
+5. Bảng order_items (Chi tiết đơn hàng)
+order_id (INT): Bắt buộc
+
+item_id (INT): Bắt buộc
+
+qty (DECIMAL): Bắt buộc - Số lượng
+
+unit_price (INT): Bắt buộc - Đơn giá
+
+6. Bảng payments (Lịch sử thanh toán) - MỚI
+id (INT): Khóa chính
+
+order_id (INT): Bắt buộc - Liên kết tới orders
+
+amount (INT): Bắt buộc - Số tiền thu/chi
+
+method (ENUM): Phương thức (cash, transfer, momo)
+
+paid_at (DATETIME): Thời gian giao dịch
+
+note (VARCHAR): Ghi chú
+
+created_by (INT): Người thu tiền
+
+7. Bảng stock_ledger (Lịch sử Kho)
+item_id (INT): Bắt buộc
+
+type (ENUM): Bắt buộc - (in, out, adjust)
+
+qty (DECIMAL): Bắt buộc - Số lượng
+
+Các trường tùy chọn: unit_cost, batch_no, ref_type, ref_id, note, signed_qty (Số lượng âm/dương để tính tồn), created_by.
+
+8. Bảng tasks (Công việc & KPI)
+title (VARCHAR): Bắt buộc - Tên công việc
+
+assignee_id (INT): Bắt buộc - ID người nhận
+
+Các trường tùy chọn: code, description, assigned_by, team_id, priority, status (todo, doing, done, blocked, cancelled), due, kpi_weight (Trọng số KPI), task_type (ENUM: kpi hoặc revenue), revenue_value (Giá trị mang lại nếu là revenue), evidence_required (Cờ bắt buộc nộp bằng chứng), evidence, done_at.
+
+9. Bảng attendance (Chấm công)
+user_id (INT): Bắt buộc
+
+date (DATE): Bắt buộc
+
+Các trường tùy chọn: shift, check_in, check_out, work_hours, ot_hours, late_minutes, note.
+
+10. Bảng payrolls (Bảng lương)
+user_id (INT): Bắt buộc
+
+period (VARCHAR): Bắt buộc - (VD: "2026-11")
+
+Các trường tính toán tự động: salary_base, work_pay, ot_pay, kpi_bonus, bhxh_deduction, union_fee, pit_tax, advance_payment, net_salary, status (draft, approved, paid), approved_by.
+
+11. Bảng sop_docs (Quy trình cho AI)
+code (VARCHAR): Bắt buộc
+
+title (VARCHAR): Bắt buộc
+
+steps (TEXT): Bắt buộc
+
+Các trường tùy chọn: owner, tags, visibility, approved.
+
+12. Bảng assets (Tài sản/Máy móc)
+code (VARCHAR): Bắt buộc
+
+name (VARCHAR): Bắt buộc
+
+Các trường tùy chọn: serial_no, brand, purchase_date, price, warranty_until, depreciation, location, last_maintenance, next_maintenance, status.
+
+13. Bảng costs (Chi phí)
+date (DATE): Bắt buộc
+
+category (VARCHAR): Bắt buộc
+
+amount (INT): Bắt buộc
+
+Các trường tùy chọn: payment_method, invoice_no, description, source, created_by.
+
+14. Bảng marketing (Tiếp thị)
+title (VARCHAR): Bắt buộc
+
+channel (VARCHAR): Bắt buộc
+
+budget (INT): Bắt buộc
+
+Các trường tùy chọn: spent, start_date, end_date, kpi_target, result.
+
+15. Bảng audit_logs (Lịch sử thao tác)
+Hệ thống tự động ghi lại, không cần truyền từ API (user_id, action, resource, ref_id, before_data, after_data, note, ip, at).
+
+16. Bảng ai_conversations (Lịch sử Chat AI)
+session_id (VARCHAR): Bắt buộc
+
+user_id (INT): Bắt buộc
+
+role (ENUM): user, assistant, summary
+
+content (TEXT): Bắt buộc - Câu hỏi/Câu trả lời
+
+PHẦN 2: TOÀN BỘ API (NÂNG CẤP V2.0)
+Header chung cho mọi API (trừ Login): Authorization: Bearer <token>
+
+1. Nhóm Xác Thực & Người Dùng (7 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+POST	/auth/login	Ai cũng được	username, password	Lấy Token
+GET	/auth/me	Tất cả		Lấy thông tin cá nhân
+GET	/users	Giám đốc		DS nhân sự
+POST	/users	Giám đốc	username, password, role, full_name	Tạo nhân sự
+PATCH	/users/:id	Giám đốc	role, full_name	Sửa nhân sự
+DELETE	/users/:id	Giám đốc		Xóa mềm (Nghỉ việc)
+PATCH	/users/:id/reset-password	Giám đốc	new_password	Cấp lại mật khẩu
+2. Nhóm Đối Tác (Partners - 3 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+GET	/partners	GĐ, KT, CTV	Query: ?type=customer	DS Khách/NCC
+POST	/partners	GĐ, KT, CTV	type, code, name, credit_limit	Tạo mới (Kèm hạn mức nợ)
+PATCH	/partners/:id	GĐ, KT, CTV	name, phone...	Sửa thông tin
+3. Nhóm Hàng Hóa (Items - 3 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+GET	/items	GĐ, KT, TT, CN	Query: ?type=material	DS Vật tư/Thành phẩm
+POST	/items	GĐ, KT	type, code, name, unit	Tạo mới
+PATCH	/items/:id	GĐ, KT	price_out, min_stock...	Sửa thông tin
+4. Nhóm Đơn Hàng (Orders - 5 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+GET	/orders	GĐ, KT, CTV		DS Đơn hàng
+GET	/orders/:id	GĐ, KT, CTV		Chi tiết 1 đơn
+POST	/orders	GĐ, KT, CTV	type, partner_id, items: [{item_id, qty, unit_price}]	Tạo đơn
+POST	/orders/:id/payments	GĐ, KT	amount, method, note	MỚI: Ghi nhận thu/chi tiền
+POST	/orders/:id/approve	GĐ		Duyệt đơn (Chặn nếu vượt hạn mức nợ, âm kho)
+5. Nhóm Kho (Stock Ledger - 3 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+GET	/stock-ledger	GĐ, KT, TT		DS lịch sử kho
+GET	/stock-ledger/balance	GĐ, KT, TT		Xem tồn kho hiện tại
+POST	/stock-ledger	GĐ, KT	item_id, type (in/out), qty	Nhập/Xuất kho (Chặn xuất âm)
+6. Nhóm Công Việc (Tasks - 3 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+GET	/tasks	Tất cả		DS công việc (Tự lọc theo Role)
+POST	/tasks	GĐ, KT, TT	title, assignee_id, task_type, revenue_value	Giao việc (Chặn TT giao ngoài tổ)
+PATCH	/tasks/:id	Người nhận	status (done/todo), evidence	Cập nhật (Bắt buộc evidence nếu done)
+7. Nhóm Chấm Công & Lương (5 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+POST	/attendance/check-in	Tất cả	shift	Chấm công vào
+POST	/attendance/check-out	Tất cả		Chấm công ra
+GET	/attendance	Tất cả		Xem giờ công
+POST	/payrolls/generate	Kế toán	user_id, period (VD: "2026-11")	Tính lương (Chặn NV đã nghỉ)
+GET	/payrolls	GĐ, KT		Xem bảng lương
+8. Nhóm Quy Trình & AI (3 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+GET	/sop	Tất cả		DS quy trình
+POST	/sop	GĐ	code, title, steps	Thêm quy trình
+POST	/ai/chat	Tất cả	question, session_id	Chat với Trợ lý AI (Phân quyền data)
+9. Nhóm Báo Cáo & Hệ Thống (4 API)
+Method	Endpoint	Quyền	Dữ liệu gửi lên (Body)	Mô tả
+GET	/dashboard	Tất cả	Query: ?period=day/week/month/quarter/year	Số liệu (Tự đổi giao diện theo Role)
+GET	/audit-logs	Giám đốc		Xem lịch sử thao tác
+GET	/assets	GĐ, KT		Xem tài sản
+POST	/costs	GĐ, KT	date, category, amount	Nhập chi phí
+PHẦN 3: JSON MẪU CHO CÁC API PHỨC TẠP (Dành cho Frontend)
+1. Tạo Đơn Hàng (POST /orders):
+
+json
+{
+  "type": "sale",
+  "partner_id": 1,
+  "note": "Giao gấp",
+  "items": [
+    { "item_id": 4, "qty": 10, "unit_price": 150000 },
+    { "item_id": 5, "qty": 5, "unit_price": 200000 }
+  ]
+}
+2. Ghi nhận Thanh toán (POST /orders/:id/payments):
+
+json
+{
+  "amount": 50000000,
+  "method": "transfer",
+  "note": "Khách chuyển khoản đợt 1"
+}
+3. Tạo Nhân Sự (POST /users):
+
+json
+{
+  "username": "nhanvien1",
+  "password": "123",
+  "role": "cong_nhan",
+  "full_name": "Nguyen Van A",
+  "phone": "0901234567",
+  "salary_base": 6000000,
+  "team_id": "T1"
+}
+4. Giao Việc (POST /tasks):
+
+json
+{
+  "title": "Thu hồi nợ khách hàng A",
+  "assignee_id": 10,
+  "task_type": "revenue",
+  "revenue_value": 50000000,
+  "due": "2026-11-30"
+}
+5. Chat với AI (POST /ai/chat):
+
+json
+{
+  "question": "Doanh thu tháng này thế nào?",
+  "session_id": "user_1_sess_123"
+}
+Lời khuyên cho Chat mới: Bạn hãy copy toàn bộ tài liệu này, mở Chat mới dán vào và nói: "Đây là bản thiết kế Database và API V2.0 của dự án. Dựa vào đây, hãy code cho tôi file Frontend Dashboard.jsx chia theo 5 Role, có bộ lọc thời gian (Ngày/Tuần/Tháng) và gọi đúng API này."
+
