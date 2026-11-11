@@ -1,23 +1,26 @@
-﻿import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
+﻿import { useState } from 'react';
+import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, UsersRound, Box, ShoppingCart, 
   Warehouse, CheckSquare, Banknote, BookOpen, LogOut, 
-  Wrench, Receipt, Megaphone
+  Wrench, Receipt, Megaphone, Menu, X
 } from 'lucide-react';
-import ChatWidget from '../components/ChatWidget'; // <-- Import Chat Widget
+import ChatWidget from '../components/ChatWidget';
 
 export default function MainLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const role = user.role;
+  
+  // State quản lý đóng/mở menu trên điện thoại
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogout = () => { 
     localStorage.clear(); 
     navigate('/login'); 
   };
 
-  // Cấu hình Menu theo từng Role
   const menuGroups = [
     { 
       title: 'Tổng quan', 
@@ -53,20 +56,37 @@ export default function MainLayout() {
     }
   ];
 
+  // Đóng sidebar khi click vào đường link (dành cho mobile)
+  const handleLinkClick = () => setIsSidebarOpen(false);
+
   return (
-    <div className="flex h-screen bg-slate-50 font-sans">
+    <div className="flex h-screen bg-slate-50 font-sans overflow-hidden">
+      
+      {/* LỚP PHỦ ĐEN MỜ KHI MỞ MENU TRÊN ĐIỆN THOẠI */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* SIDEBAR BÊN TRÁI */}
-      <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col shadow-xl z-20">
-        <div className="h-16 flex items-center justify-center border-b border-slate-800">
+      <aside className={`
+        fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 flex flex-col shadow-xl transition-transform duration-300 ease-in-out
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+        md:relative md:translate-x-0
+      `}>
+        <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800">
           <span className="text-white text-xl font-bold tracking-wider">SUNNY<span className="text-blue-500">AI</span></span>
+          {/* Nút X đóng menu trên mobile */}
+          <button className="md:hidden text-slate-400 hover:text-white" onClick={() => setIsSidebarOpen(false)}>
+            <X size={24} />
+          </button>
         </div>
         
         <nav className="flex-1 py-4 overflow-y-auto px-3 space-y-6 custom-scrollbar">
           {menuGroups.map((group, gIdx) => {
-            // Lọc các item mà role hiện tại được phép xem
             const allowedItems = group.items.filter(item => item.roles.includes(role));
-            
-            // Nếu cả nhóm không có item nào được phép xem thì ẩn luôn cả nhóm
             if (allowedItems.length === 0) return null;
 
             return (
@@ -79,6 +99,7 @@ export default function MainLayout() {
                       <Link 
                         key={iIdx} 
                         to={item.path} 
+                        onClick={handleLinkClick}
                         className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm ${
                           isActive 
                             ? 'bg-blue-600 text-white font-medium shadow-md' 
@@ -106,25 +127,37 @@ export default function MainLayout() {
       </aside>
 
       {/* NỘI DUNG BÊN PHẢI */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 z-10 shadow-sm">
-          <div className="text-slate-500 text-sm">
-            Xin chào, <span className="font-bold text-slate-800">{user.name}</span> 
-            <span className="ml-2 px-2 py-1 bg-slate-100 rounded text-xs font-semibold uppercase">{user.role}</span>
+      <main className="flex-1 flex flex-col h-screen w-full overflow-hidden">
+        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-8 z-10 shadow-sm shrink-0">
+          <div className="flex items-center gap-3 md:gap-0">
+            {/* NÚT MENU 3 GẠCH TRÊN MOBILE */}
+            <button 
+              className="md:hidden text-slate-600 hover:text-slate-900 focus:outline-none" 
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <Menu size={24} />
+            </button>
+
+            <div className="text-slate-500 text-sm hidden sm:block">
+              Xin chào, <span className="font-bold text-slate-800">{user.name}</span> 
+              <span className="ml-2 px-2 py-1 bg-slate-100 rounded text-xs font-semibold uppercase">{user.role}</span>
+            </div>
           </div>
+
           <div className="flex items-center gap-3">
+             <div className="text-sm font-bold text-slate-800 sm:hidden">{user.name}</div>
             <div className="w-9 h-9 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold">
               {user.name?.charAt(0) || 'A'}
             </div>
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-8 relative">
+        {/* Vùng nội dung: padding nhỏ trên mobile, to trên desktop */}
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 relative">
           <Outlet />
         </div>
       </main>
 
-      {/* COMPONENT CHAT NỔI (GÓC DƯỚI BÊN PHẢI) */}
       <ChatWidget />
     </div>
   );

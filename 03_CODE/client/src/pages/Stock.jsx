@@ -17,6 +17,7 @@ export default function Stock() {
   };
 
   useEffect(() => {
+    // Bọc setTimeout để tránh cảnh báo setState đồng bộ trong React 18
     const timer = setTimeout(() => { fetchStock(); }, 0);
     return () => clearTimeout(timer);
   }, []);
@@ -27,49 +28,81 @@ export default function Stock() {
   );
 
   const columns = [
-    { header: 'Thời gian', accessor: 'created_at', render: (r) => (
-      <span className="text-slate-600 text-sm whitespace-nowrap">
-        {new Date(r.created_at).toLocaleString('vi-VN')}
-      </span>
-    )},
-    { header: 'Mã hàng', accessor: 'item_code', render: (r) => <span className="font-bold text-slate-700">{r.item_code}</span> },
-    { header: 'Tên hàng hóa', accessor: 'item_name', render: (r) => <span className="font-medium text-slate-800">{r.item_name}</span> },
-    { header: 'Loại giao dịch', accessor: 'type', render: (r) => {
-      if (r.type === 'in') return <span className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md text-xs font-bold w-max"><ArrowDownToLine size={14}/> Nhập kho</span>;
-      if (r.type === 'out') return <span className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-md text-xs font-bold w-max"><ArrowUpFromLine size={14}/> Xuất kho</span>;
-      return <span className="flex items-center gap-1 text-blue-600 bg-blue-50 px-2 py-1 rounded-md text-xs font-bold w-max"><RefreshCw size={14}/> Điều chỉnh</span>;
-    }},
-    { header: 'Số lượng', accessor: 'qty', render: (r) => (
-      <span className={`font-bold ${r.type === 'in' ? 'text-emerald-600' : 'text-red-600'}`}>
-        {r.type === 'in' ? '+' : '-'}{Number(r.qty).toLocaleString('vi-VN')}
-      </span>
-    )},
-    { header: 'Nguồn gốc', accessor: 'ref_type', render: (r) => {
-      if (r.ref_type === 'order') return <span className="text-sm text-slate-500">Từ Đơn hàng (ID: {r.ref_id})</span>;
-      if (r.ref_type === 'work_order') return <span className="text-sm text-slate-500">Từ Sản xuất</span>;
-      if (r.ref_type === 'initial') return <span className="text-sm text-slate-500 italic">Tồn kho ban đầu</span>;
-      return <span className="text-sm text-slate-500">Nhập tay</span>;
-    }}
+    { 
+      header: 'Thời gian', 
+      accessor: 'created_at', 
+      render: (r) => (
+        <span className="text-slate-600 text-sm whitespace-nowrap">
+          {new Date(r.created_at).toLocaleString('vi-VN')}
+        </span>
+      )
+    },
+    { 
+      header: 'Mã hàng', 
+      accessor: 'item_code', 
+      render: (r) => <span className="font-bold text-slate-700 whitespace-nowrap">{r.item_code}</span> 
+    },
+    { 
+      header: 'Tên hàng hóa', 
+      accessor: 'item_name', 
+      render: (r) => <span className="font-medium text-slate-800 min-w-[180px] block">{r.item_name}</span> 
+    },
+    { 
+      header: 'Loại giao dịch', 
+      accessor: 'type', 
+      render: (r) => {
+        if (r.type === 'in') return <span className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md text-xs font-bold w-max whitespace-nowrap"><ArrowDownToLine size={14}/> Nhập kho</span>;
+        if (r.type === 'out') return <span className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-md text-xs font-bold w-max whitespace-nowrap"><ArrowUpFromLine size={14}/> Xuất kho</span>;
+        return <span className="flex items-center gap-1 text-blue-600 bg-blue-50 px-2 py-1 rounded-md text-xs font-bold w-max whitespace-nowrap"><RefreshCw size={14}/> Điều chỉnh</span>;
+      }
+    },
+    { 
+      header: 'Số lượng', 
+      accessor: 'qty', 
+      render: (r) => (
+        <span className={`font-bold whitespace-nowrap ${r.type === 'in' ? 'text-emerald-600' : 'text-red-600'}`}>
+          {r.type === 'in' ? '+' : '-'}{Number(r.qty).toLocaleString('vi-VN')}
+        </span>
+      )
+    },
+    { 
+      header: 'Nguồn gốc', 
+      accessor: 'ref_type', 
+      render: (r) => {
+        if (r.ref_type === 'order') return <span className="text-sm text-slate-500 whitespace-nowrap">Từ Đơn hàng (ID: {r.ref_id})</span>;
+        if (r.ref_type === 'work_order') return <span className="text-sm text-slate-500 whitespace-nowrap">Từ Sản xuất</span>;
+        if (r.ref_type === 'initial') return <span className="text-sm text-slate-500 italic whitespace-nowrap">Tồn kho ban đầu</span>;
+        return <span className="text-sm text-slate-500 whitespace-nowrap">Nhập tay</span>;
+      }
+    }
   ];
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* HEADER: Mobile xếp dọc */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Lịch sử Kho</h1>
           <p className="text-slate-500 text-sm mt-1">Nhật ký Nhập / Xuất kho của toàn bộ hàng hóa.</p>
         </div>
         
-        <div className="relative w-72">
+        {/* Ô tìm kiếm: Mobile full width */}
+        <div className="relative w-full md:w-72 shrink-0">
           <Search className="absolute left-3 top-2.5 text-slate-400" size={18} />
-          <input type="text" placeholder="Tìm theo tên hoặc mã hàng..." value={search} onChange={e => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm" />
+          <input 
+            type="text" 
+            placeholder="Tìm theo tên hoặc mã hàng..." 
+            value={search} 
+            onChange={e => setSearch(e.target.value)} 
+            className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm" 
+          />
         </div>
       </div>
 
       {/* Bảng Dữ liệu */}
       <DataTable columns={columns} data={filteredLedger} loading={loading} />
       
+      {/* Ghi chú */}
       <div className="text-sm text-slate-500 bg-slate-50 p-4 rounded-xl border border-slate-200">
         <p><b>Lưu ý:</b> Đây là sổ cái kho (Append-only). Mọi giao dịch đều được ghi nhận vĩnh viễn, không thể sửa hay xóa để đảm bảo tính minh bạch cho kiểm toán.</p>
       </div>
