@@ -178,7 +178,7 @@ export default function Dashboard() {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-slate-500 text-xs md:text-sm font-medium mb-1">Cảnh Báo Tồn Kho</p>
-                <h3 className="text-xl md:text-2xl font-extrabold text-red-600">{data.low_stock_items.length} <span className="text-xs md:text-sm">mặt hàng</span></h3>
+                <h3 className="text-xl md:text-2xl font-extrabold text-red-600">{(data.low_stock_items || []).length} <span className="text-xs md:text-sm">mặt hàng</span></h3>
               </div>
               <div className="w-10 h-10 md:w-12 md:h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center shrink-0"><AlertTriangle size={20} className="md:w-6 md:h-6" /></div>
             </div>
@@ -232,7 +232,7 @@ export default function Dashboard() {
               <h3 className="text-base md:text-lg font-bold text-slate-800">Cảnh báo Tồn kho</h3>
             </div>
             <div className="flex-1 overflow-y-auto pr-2 max-h-[300px] md:max-h-[400px]">
-              {data.low_stock_items.length > 0 ? (
+              {(data.low_stock_items || []).length > 0 ? (
                 <div className="space-y-2 md:space-y-3">
                   {data.low_stock_items.map((item, idx) => (
                     <div key={idx} className="flex justify-between items-center bg-red-50/50 p-2 md:p-3 rounded-xl border border-red-100 gap-2">

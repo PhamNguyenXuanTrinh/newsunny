@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, UsersRound, Box, ShoppingCart, 
   Warehouse, CheckSquare, Banknote, BookOpen, LogOut, 
-  Wrench, Receipt, Megaphone, Menu, X
+  Wrench, Receipt, Megaphone, Menu, X, Clock
 } from 'lucide-react';
 import ChatWidget from '../components/ChatWidget';
 
@@ -42,6 +42,7 @@ export default function MainLayout() {
       title: 'Nhân sự & Vận hành', 
       items: [
         { path: '/users', label: 'Nhân sự', icon: <Users size={20} />, roles: ['giam_doc'] },
+        { path: '/attendance', label: 'Chấm công', icon: <Clock size={20} />, roles: ['giam_doc', 'ke_toan', 'to_truong', 'cong_nhan', 'ctv'] },
         { path: '/tasks', label: 'Công việc & KPI', icon: <CheckSquare size={20} />, roles: ['giam_doc', 'ke_toan', 'to_truong', 'cong_nhan', 'ctv'] },
         { path: '/payrolls', label: 'Bảng lương', icon: <Banknote size={20} />, roles: ['giam_doc', 'ke_toan'] },
       ]
@@ -127,7 +128,7 @@ export default function MainLayout() {
       </aside>
 
       {/* NỘI DUNG BÊN PHẢI */}
-      <main className="flex-1 flex flex-col h-screen w-full overflow-hidden">
+      <main className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-8 z-10 shadow-sm shrink-0">
           <div className="flex items-center gap-3 md:gap-0">
             {/* NÚT MENU 3 GẠCH TRÊN MOBILE */}
@@ -162,3 +163,4 @@ export default function MainLayout() {
     </div>
   );
 }
+

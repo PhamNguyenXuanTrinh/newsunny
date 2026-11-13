@@ -8,6 +8,7 @@ import Items from './pages/Items';
 import Orders from './pages/Orders';
 import Stock from './pages/Stock';
 import Tasks from './pages/Tasks';
+import Attendance from './pages/Attendance';
 import Payrolls from './pages/Payrolls';
 import SOP from './pages/SOP';
 import Assets from './pages/Assets';
@@ -52,6 +53,9 @@ export default function App() {
           <Route path="stock" element={<RoleRoute allowedRoles={['giam_doc', 'ke_toan', 'to_truong']}><Stock /></RoleRoute>} />
           <Route path="tasks" element={<RoleRoute allowedRoles={['giam_doc', 'ke_toan', 'to_truong', 'cong_nhan', 'ctv']}><Tasks /></RoleRoute>} />
           <Route path="sop" element={<RoleRoute allowedRoles={['giam_doc', 'ke_toan', 'to_truong', 'cong_nhan', 'ctv']}><SOP /></RoleRoute>} />
+          
+          {/* THÊM DÒNG NÀY: Route cho trang Chấm công (tất cả mọi người đều vào được) */}
+          <Route path="attendance" element={<RoleRoute allowedRoles={['giam_doc', 'ke_toan', 'to_truong', 'cong_nhan', 'ctv']}><Attendance /></RoleRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>
