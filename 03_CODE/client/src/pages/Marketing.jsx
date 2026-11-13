@@ -1,154 +1,64 @@
-﻿import { useEffect, useState } from 'react';
+﻿import {useEffect,useMemo,useState} from 'react';
 import api from '../api';
-import { Plus, X, Megaphone, Target, TrendingUp } from 'lucide-react';
+import {Plus,X,Megaphone,Target,TrendingUp,Search,RefreshCw,Edit2,Trash2,Save,Loader2,Wallet,BarChart3,CalendarDays,Activity} from 'lucide-react';
 import DataTable from '../components/DataTable';
 
-export default function Marketing() {
-  const [campaigns, setCampaigns] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-  // State Modal Thêm chiến dịch
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    title: '', channel: 'Facebook', budget: 0, kpi_target: 0
-  });
+const EMPTY={title:'',channel:'Facebook',budget:'',spent:'',start_date:'',end_date:'',kpi_target:'',result:''};
 
-  const fetchCampaigns = () => {
-    setLoading(true);
-    api.get('/marketing')
-      .then(res => setCampaigns(res.data.data))
-      .catch(err => console.error(err))
-      .finally(() => setLoading(false));
-  };
+export default function Marketing(){
+  const [campaigns,setCampaigns]=useState([]),[loading,setLoading]=useState(true),[refreshing,setRefreshing]=useState(false),[saving,setSaving]=useState(false),[search,setSearch]=useState(''),[filter,setFilter]=useState('all'),[modal,setModal]=useState(false),[current,setCurrent]=useState(null),[form,setForm]=useState(EMPTY);
+  const fetchData=async(manual=false)=>{if(manual)setRefreshing(true);try{const r=await api.get('/marketing');setCampaigns(Array.isArray(r.data?.data)?r.data.data:[]);}catch(e){console.error(e);}finally{setLoading(false);setRefreshing(false);}};
+  useEffect(()=>{let active=true;const t=setTimeout(()=>api.get('/marketing').then(r=>{if(active)setCampaigns(Array.isArray(r.data?.data)?r.data.data:[]);}).catch(console.error).finally(()=>active&&setLoading(false)),0);return()=>{active=false;clearTimeout(t);};},[]);
+  const money=n=>(Number(n)||0).toLocaleString('vi-VN');
+  const date=v=>{if(!v)return '-';const d=new Date(v);return Number.isNaN(d.getTime())?'-':d.toLocaleDateString('vi-VN');};
+  const inputDate=v=>{if(!v)return '';const d=new Date(v);return Number.isNaN(d.getTime())?'':d.toISOString().slice(0,10);};
+  const stats=useMemo(()=>{const budget=campaigns.reduce((s,x)=>s+(+x.budget||0),0),spent=campaigns.reduce((s,x)=>s+(+x.spent||0),0),target=campaigns.reduce((s,x)=>s+(+x.kpi_target||0),0),result=campaigns.reduce((s,x)=>s+(+x.result||0),0);return{total:campaigns.length,budget,spent,result,performance:target?Math.round(result/target*100):0};},[campaigns]);
+  const channels=useMemo(()=>[...new Set(campaigns.map(x=>x.channel).filter(Boolean))],[campaigns]);
+  const filtered=useMemo(()=>{const q=search.trim().toLowerCase();return campaigns.filter(x=>(filter==='all'||x.channel===filter)&&(!q||[x.title,x.channel].some(v=>String(v||'').toLowerCase().includes(q))));},[campaigns,search,filter]);
+  const openNew=()=>{setCurrent(null);setForm(EMPTY);setModal(true);};
+  const openEdit=x=>{setCurrent(x);setForm({title:x.title||'',channel:x.channel||'Facebook',budget:x.budget??'',spent:x.spent??'',start_date:inputDate(x.start_date),end_date:inputDate(x.end_date),kpi_target:x.kpi_target??'',result:x.result??''});setModal(true);};
+  const close=()=>{if(!saving){setModal(false);setCurrent(null);setForm(EMPTY);}};
+  const save=async e=>{e.preventDefault();if(saving)return;if(form.start_date&&form.end_date&&form.end_date<form.start_date)return alert('Ngày kết thúc không được trước ngày bắt đầu.');setSaving(true);try{const p={title:form.title.trim(),channel:form.channel,budget:+form.budget||0,spent:+form.spent||0,start_date:form.start_date||null,end_date:form.end_date||null,kpi_target:+form.kpi_target||0,result:+form.result||0};current?await api.patch(`/marketing/${current.id}`,p):await api.post('/marketing',p);setModal(false);setCurrent(null);setForm(EMPTY);await fetchData();}catch(e){alert('Lỗi: '+(e.response?.data?.error||e.message));}finally{setSaving(false);}};
+  const remove=async x=>{if(!window.confirm(`Xóa chiến dịch "${x.title}"?`))return;try{await api.delete(`/marketing/${x.id}`);await fetchData();}catch(e){alert('Lỗi: '+(e.response?.data?.error||e.message));}};
+  const percent=x=>(+x.kpi_target||0)?Math.round((+x.result||0)/(+x.kpi_target)*100):0;
+  const channelClass=c=>({Facebook:'bg-blue-50 text-blue-700','Google Ads':'bg-red-50 text-red-600',TikTok:'bg-slate-100 text-slate-700',Zalo:'bg-sky-50 text-sky-700'}[c]||'bg-violet-50 text-violet-700');
 
-  useEffect(() => {
-    // Bọc setTimeout để tránh cảnh báo setState đồng bộ trong React 18
-    const timer = setTimeout(() => { fetchCampaigns(); }, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-    try {
-      const payload = {
-        ...formData,
-        budget: Number(formData.budget),
-        kpi_target: Number(formData.kpi_target)
-      };
-      await api.post('/marketing', payload);
-      setIsModalOpen(false);
-      fetchCampaigns();
-    } catch (err) {
-      alert('Lỗi: ' + (err.response?.data?.error || err.message));
-    }
-  };
-
-  const columns = [
-    { header: 'Tên chiến dịch', accessor: 'title', render: (r) => (
-      <div className="flex items-center gap-3 min-w-[200px]">
-        <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-          <Megaphone size={20} />
-        </div>
-        <span className="font-bold text-slate-800 line-clamp-2">{r.title}</span>
-      </div>
-    )},
-    { header: 'Kênh', accessor: 'channel', render: (r) => (
-      <span className="px-2 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold whitespace-nowrap">{r.channel}</span>
-    )},
-    { header: 'Ngân sách', accessor: 'budget', render: (r) => (
-      <span className="font-semibold text-slate-700 whitespace-nowrap">{Number(r.budget).toLocaleString('vi-VN')} đ</span>
-    )},
-    { header: 'Mục tiêu (Khách)', accessor: 'kpi_target', render: (r) => (
-      <span className="flex items-center gap-1 text-sm text-slate-600 whitespace-nowrap"><Target size={14}/> {r.kpi_target}</span>
-    )},
-    { header: 'Kết quả đạt', accessor: 'result', render: (r) => {
-      const percent = r.kpi_target > 0 ? Math.round((r.result / r.kpi_target) * 100) : 0;
-      return (
-        // Thêm min-w để thanh tiến trình không bị bóp méo trên mobile
-        <div className="min-w-[120px]">
-          <div className="flex justify-between text-xs mb-1">
-            <span className="font-semibold text-emerald-600">{r.result} khách</span>
-            <span className="text-slate-500">{percent}%</span>
-          </div>
-          <div className="w-full bg-slate-200 rounded-full h-1.5">
-            <div className={`h-1.5 rounded-full ${percent >= 100 ? 'bg-emerald-500' : 'bg-blue-500'}`} style={{ width: `${Math.min(percent, 100)}%` }}></div>
-          </div>
-        </div>
-      );
-    }}
+  const columns=[
+    {header:'Chiến dịch',accessor:'title',render:r=><div className="flex min-w-[200px] items-center gap-3"><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Megaphone size={18}/></div><div><p className="font-bold text-slate-800">{r.title}</p><p className="text-[10px] text-slate-400">#{String(r.id).padStart(4,'0')}</p></div></div>},
+    {header:'Kênh',accessor:'channel',render:r=><span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${channelClass(r.channel)}`}>{r.channel||'-'}</span>},
+    {header:'Thời gian',accessor:'start_date',render:r=><div className="min-w-[115px] text-[11px] text-slate-600"><p className="flex items-center gap-1"><CalendarDays size={12} className="text-blue-500"/>{date(r.start_date)}</p><p className="mt-1 text-slate-400">→ {date(r.end_date)}</p></div>},
+    {header:'Ngân sách',accessor:'budget',render:r=><div className="min-w-[110px]"><p className="font-bold text-slate-700">{money(r.budget)} đ</p><p className="text-[10px] text-slate-400">Đã chi: {money(r.spent)} đ</p></div>},
+    {header:'Mục tiêu',accessor:'kpi_target',render:r=><span className="flex items-center gap-1 text-xs font-semibold text-slate-600"><Target size={13}/>{money(r.kpi_target)} khách</span>},
+    {header:'Kết quả',accessor:'result',render:r=>{const p=percent(r);return <div className="min-w-[135px]"><div className="mb-1 flex justify-between text-[10px]"><b className="text-emerald-600">{money(r.result)} khách</b><b>{p}%</b></div><div className="h-1.5 overflow-hidden rounded-full bg-slate-100"><div className={`h-full rounded-full ${p>=100?'bg-emerald-500':'bg-blue-500'}`} style={{width:`${Math.min(Math.max(p,0),100)}%`}}/></div></div>;}},
+    {header:'Thao tác',accessor:'id',render:r=><div className="flex gap-1"><button onClick={()=>openEdit(r)} className="rounded-lg p-2 text-blue-600 hover:bg-blue-50"><Edit2 size={15}/></button><button onClick={()=>remove(r)} className="rounded-lg p-2 text-red-500 hover:bg-red-50"><Trash2 size={15}/></button></div>}
   ];
 
-  return (
-    <div className="space-y-6">
-      {/* HEADER: Mobile xếp dọc */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-            <TrendingUp className="text-blue-600 shrink-0" /> Quản lý Tiếp thị
-          </h1>
-          <p className="text-slate-500 text-sm mt-1">Theo dõi hiệu quả các chiến dịch quảng cáo.</p>
-        </div>
-        
-        <button 
-          onClick={() => { setFormData({ title: '', channel: 'Facebook', budget: 0, kpi_target: 0 }); setIsModalOpen(true); }} 
-          className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow-sm w-full sm:w-auto shrink-0"
-        >
-          <Plus size={18} /> Tạo chiến dịch
-        </button>
+  const cards=[['Tổng chiến dịch',stats.total,Megaphone,'bg-slate-100 text-slate-600'],['Tổng ngân sách',`${money(stats.budget)} đ`,Wallet,'bg-blue-50 text-blue-600'],['Đã chi',`${money(stats.spent)} đ`,TrendingUp,'bg-orange-50 text-orange-600'],['Hiệu suất KPI',`${stats.performance}%`,BarChart3,'bg-emerald-50 text-emerald-600']];
+
+  return <div className="mx-auto w-full max-w-[1600px] animate-[pageIn_.4s_ease-out]">
+    <section className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center"><div><div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.15em] text-blue-600"><Activity size={13}/> Tiếp thị & Tăng trưởng</div><h1 className="text-xl font-black text-slate-900 md:text-2xl">Quản lý Tiếp thị</h1><p className="mt-1 text-xs text-slate-500">Theo dõi ngân sách, chi phí và hiệu quả chiến dịch Marketing.</p></div><button onClick={openNew} className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 text-xs font-bold text-white shadow-lg shadow-blue-200"><Plus size={17}/> Tạo chiến dịch</button></section>
+
+    <section className="mb-5 grid grid-cols-2 gap-3 xl:grid-cols-4">{cards.map(([label,value,Icon,color],i)=><div key={label} style={{animationDelay:`${i*60}ms`}} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm animate-[cardIn_.4s_ease-out_both] transition hover:-translate-y-1 hover:shadow-lg"><div className="flex items-center gap-3"><div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${color}`}><Icon size={20}/></div><div className="min-w-0"><p className="text-[10px] font-semibold text-slate-400">{label}</p><p className="truncate text-lg font-black text-slate-900">{value}</p></div></div></div>)}</section>
+
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div className="flex flex-col justify-between gap-3 border-b p-4 lg:flex-row lg:items-center"><div><h2 className="text-sm font-bold">Danh sách chiến dịch</h2><p className="text-[10px] text-slate-400">{filtered.length} / {campaigns.length} chiến dịch</p></div><div className="flex flex-col gap-2 sm:flex-row"><select value={filter} onChange={e=>setFilter(e.target.value)} className="h-9 rounded-xl border bg-slate-50 px-3 text-[11px]"><option value="all">Tất cả kênh</option>{channels.map(c=><option key={c}>{c}</option>)}</select><div className="flex gap-2"><div className="relative"><Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Tìm chiến dịch..." className="h-9 w-full rounded-xl border bg-slate-50 pl-9 pr-3 text-[11px] sm:w-56"/></div><button onClick={()=>fetchData(true)} className="flex h-9 w-9 items-center justify-center rounded-xl border text-slate-500 hover:text-blue-600"><RefreshCw size={14} className={refreshing?'animate-spin':''}/></button></div></div></div><div className="p-2"><DataTable columns={columns} data={filtered} loading={loading}/></div></section>
+
+    {modal&&<div onMouseDown={e=>e.target===e.currentTarget&&close()} className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/55 p-3 backdrop-blur-sm"><div className="flex max-h-[92vh] w-full max-w-[650px] flex-col overflow-hidden rounded-3xl bg-white shadow-2xl animate-[modalIn_.25s_ease-out]"><div className="flex items-center justify-between border-b p-5"><div><h3 className="font-bold text-slate-900">{current?'Cập nhật chiến dịch':'Tạo chiến dịch mới'}</h3><p className="text-[10px] text-slate-400">{current?`Chiến dịch #${String(current.id).padStart(4,'0')}`:'Nhập thông tin chiến dịch'}</p></div><button onClick={close} className="p-2 text-slate-400 hover:text-red-500"><X size={18}/></button></div>
+      <form onSubmit={save} className="overflow-y-auto p-5"><div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="sm:col-span-2"><Field label="Tên chiến dịch *"><input required value={form.title} onChange={e=>setForm({...form,title:e.target.value})} className="marketing-input" placeholder="VD: Khuyến mãi Thảm 3D mùa đông"/></Field></div>
+        <Field label="Kênh chạy *"><select value={form.channel} onChange={e=>setForm({...form,channel:e.target.value})} className="marketing-input"><option>Facebook</option><option>Google Ads</option><option>TikTok</option><option>Zalo</option><option>Khác</option></select></Field>
+        <Field label="Ngân sách dự kiến (đ) *"><input required type="number" min="0" value={form.budget} onChange={e=>setForm({...form,budget:e.target.value})} className="marketing-input"/></Field>
+        <Field label="Ngày bắt đầu"><input type="date" value={form.start_date} onChange={e=>setForm({...form,start_date:e.target.value})} className="marketing-input"/></Field>
+        <Field label="Ngày kết thúc"><input type="date" value={form.end_date} onChange={e=>setForm({...form,end_date:e.target.value})} className="marketing-input"/></Field>
+        <Field label="Mục tiêu khách hàng *"><input required type="number" min="0" value={form.kpi_target} onChange={e=>setForm({...form,kpi_target:e.target.value})} className="marketing-input"/></Field>
+        <Field label="Kết quả đạt được"><input type="number" min="0" value={form.result} onChange={e=>setForm({...form,result:e.target.value})} className="marketing-input"/></Field>
+        <div className="sm:col-span-2"><Field label="Chi phí đã sử dụng (đ)"><input type="number" min="0" value={form.spent} onChange={e=>setForm({...form,spent:e.target.value})} className="marketing-input"/></Field></div>
       </div>
+      {+form.spent>+form.budget&&+form.budget>0&&<div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-[11px] font-semibold text-amber-700">Chi phí đã sử dụng đang vượt ngân sách dự kiến.</div>}
+      <div className="mt-6 flex flex-col-reverse justify-end gap-2 border-t pt-4 sm:flex-row"><button type="button" onClick={close} disabled={saving} className="h-10 rounded-xl px-4 text-xs font-semibold text-slate-500 hover:bg-slate-100">Hủy</button><button disabled={saving} className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-xs font-bold text-white shadow-lg disabled:opacity-50">{saving?<Loader2 size={15} className="animate-spin"/>:<Save size={15}/>} {saving?'Đang lưu...':current?'Lưu cập nhật':'Tạo chiến dịch'}</button></div></form>
+    </div></div>}
 
-      {/* Bảng Dữ liệu */}
-      <DataTable columns={columns} data={campaigns} loading={loading} />
-
-      {/* Modal Thêm Chiến dịch */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          {/* Modal tự động co giãn, có thanh cuộn dọc */}
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-[500px] max-h-[90vh] overflow-y-auto flex flex-col">
-            
-            <div className="bg-slate-50 px-4 sm:px-6 py-4 border-b border-slate-200 flex justify-between items-center sticky top-0 z-10 shrink-0">
-              <h3 className="font-bold text-lg text-slate-800">Tạo Chiến dịch mới</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-red-500 p-1"><X size={20} /></button>
-            </div>
-            
-            <form onSubmit={handleSave} className="p-4 sm:p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1">Tên chiến dịch *</label>
-                <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="VD: Khuyến mãi Thảm 3D mùa đông" />
-              </div>
-
-              {/* Grid: 1 cột trên mobile, 2 cột trên desktop */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1">Kênh chạy *</label>
-                  <select required value={formData.channel} onChange={e => setFormData({...formData, channel: e.target.value})} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                    <option value="Facebook">Facebook</option>
-                    <option value="Google">Google Ads</option>
-                    <option value="TikTok">TikTok</option>
-                    <option value="Zalo">Zalo</option>
-                    <option value="Khác">Khác</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1">Ngân sách dự kiến (đ) *</label>
-                  <input required type="number" min="0" step="100000" value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1">Mục tiêu (Số lượng khách hàng) *</label>
-                <input required type="number" min="0" value={formData.kpi_target} onChange={e => setFormData({...formData, kpi_target: e.target.value})} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
-              </div>
-
-              {/* Nút bấm: Mobile xếp dọc */}
-              <div className="pt-4 flex flex-col-reverse sm:flex-row justify-end gap-3 border-t">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg w-full sm:w-auto">Hủy</button>
-                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-md w-full sm:w-auto">Lưu chiến dịch</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+    <style>{`@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}.marketing-input{width:100%;height:42px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;padding:0 12px;font-size:12px;color:#334155;outline:none;transition:.2s}.marketing-input:focus{border-color:#93c5fd;background:#fff;box-shadow:0 0 0 3px #dbeafe}`}</style>
+  </div>;
 }
+
+function Field({label,children}){return <label className="block"><span className="mb-1.5 block text-[11px] font-semibold text-slate-600">{label}</span>{children}</label>;}

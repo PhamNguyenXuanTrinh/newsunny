@@ -1,0 +1,2469 @@
+{
+  "users": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "username": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "password_hash": {
+        "type": "varchar(255)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "role": {
+        "type": "enum('giam_doc','ke_toan','to_truong','cong_nhan','ctv')",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "giam_doc",
+          "ke_toan",
+          "to_truong",
+          "cong_nhan",
+          "ctv"
+        ],
+        "setValues": null
+      },
+      "status": {
+        "type": "enum('active','resigned','suspended')",
+        "nullable": true,
+        "key": "",
+        "default": "active",
+        "extra": "",
+        "enumValues": [
+          "active",
+          "resigned",
+          "suspended"
+        ],
+        "setValues": null
+      },
+      "full_name": {
+        "type": "varchar(100)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "dob": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "gender": {
+        "type": "enum('male','female','other')",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "male",
+          "female",
+          "other"
+        ],
+        "setValues": null
+      },
+      "cccd": {
+        "type": "varchar(20)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "cccd_date": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "cccd_place": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "phone": {
+        "type": "varchar(20)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "email": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "permanent_address": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "current_address": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "emergency_contact": {
+        "type": "varchar(150)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "team_id": {
+        "type": "varchar(20)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "position": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "join_date": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "contract_type": {
+        "type": "enum('probation','official','seasonal')",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "probation",
+          "official",
+          "seasonal"
+        ],
+        "setValues": null
+      },
+      "salary_base": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "bank_account": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "bank_name": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "tax_code": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "bhxh_code": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "partners": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "type": {
+        "type": "enum('customer','supplier')",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "customer",
+          "supplier"
+        ],
+        "setValues": null
+      },
+      "code": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "name": {
+        "type": "varchar(255)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "company_name": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "contact_person": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "phone": {
+        "type": "varchar(20)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "email": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "tax_code": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "address": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "category": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "bank_account": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "bank_name": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "credit_limit": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "payment_term": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "owner_id": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "is_active": {
+        "type": "tinyint(1)",
+        "nullable": true,
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "items": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "type": {
+        "type": "enum('material','product')",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "material",
+          "product"
+        ],
+        "setValues": null
+      },
+      "code": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "barcode": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "name": {
+        "type": "varchar(255)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "unit": {
+        "type": "varchar(20)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "price_in": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "price_out": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "price_floor": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "min_stock": {
+        "type": "decimal(15,3)",
+        "nullable": true,
+        "key": "",
+        "default": "0.000",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "max_stock": {
+        "type": "decimal(15,3)",
+        "nullable": true,
+        "key": "",
+        "default": "0.000",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "spec_thickness": {
+        "type": "decimal(10,3)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "spec_width": {
+        "type": "decimal(10,3)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "spec_length": {
+        "type": "decimal(10,3)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "weight": {
+        "type": "decimal(10,3)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "location": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "is_active": {
+        "type": "tinyint(1)",
+        "nullable": true,
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "orders": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "type": {
+        "type": "enum('sale','purchase')",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "sale",
+          "purchase"
+        ],
+        "setValues": null
+      },
+      "code": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "partner_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "sub_total": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "discount": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "tax_amount": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "shipping_fee": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "total": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "paid_amount": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "payment_status": {
+        "type": "enum('unpaid','partial','paid')",
+        "nullable": true,
+        "key": "",
+        "default": "unpaid",
+        "extra": "",
+        "enumValues": [
+          "unpaid",
+          "partial",
+          "paid"
+        ],
+        "setValues": null
+      },
+      "payment_method": {
+        "type": "enum('cash','transfer')",
+        "nullable": true,
+        "key": "",
+        "default": "transfer",
+        "extra": "",
+        "enumValues": [
+          "cash",
+          "transfer"
+        ],
+        "setValues": null
+      },
+      "status": {
+        "type": "enum('draft','pending','approved','delivered','done','cancelled')",
+        "nullable": true,
+        "key": "",
+        "default": "draft",
+        "extra": "",
+        "enumValues": [
+          "draft",
+          "pending",
+          "approved",
+          "delivered",
+          "done",
+          "cancelled"
+        ],
+        "setValues": null
+      },
+      "delivery_address": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "due_date": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "note": {
+        "type": "text",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "approved_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      },
+      "require_full_payment": {
+        "type": "tinyint(1)",
+        "nullable": true,
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "order_items": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "order_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "item_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "qty": {
+        "type": "decimal(15,3)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "unit_price": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "amount": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "payments": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "order_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "amount": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "method": {
+        "type": "enum('cash','transfer','momo')",
+        "nullable": true,
+        "key": "",
+        "default": "transfer",
+        "extra": "",
+        "enumValues": [
+          "cash",
+          "transfer",
+          "momo"
+        ],
+        "setValues": null
+      },
+      "paid_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "note": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "stock_ledger": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "item_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "type": {
+        "type": "enum('in','out','adjust')",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "in",
+          "out",
+          "adjust"
+        ],
+        "setValues": null
+      },
+      "qty": {
+        "type": "decimal(15,3)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "signed_qty": {
+        "type": "decimal(15,3)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "unit_cost": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "batch_no": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "ref_type": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "ref_id": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "note": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "tasks": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "code": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "title": {
+        "type": "varchar(255)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "description": {
+        "type": "text",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "assignee_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "assigned_by": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "team_id": {
+        "type": "varchar(20)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "priority": {
+        "type": "enum('low','normal','high','urgent')",
+        "nullable": true,
+        "key": "",
+        "default": "normal",
+        "extra": "",
+        "enumValues": [
+          "low",
+          "normal",
+          "high",
+          "urgent"
+        ],
+        "setValues": null
+      },
+      "status": {
+        "type": "enum('todo','doing','done','blocked')",
+        "nullable": true,
+        "key": "",
+        "default": "todo",
+        "extra": "",
+        "enumValues": [
+          "todo",
+          "doing",
+          "done",
+          "blocked"
+        ],
+        "setValues": null
+      },
+      "due": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "kpi_weight": {
+        "type": "decimal(5,2)",
+        "nullable": true,
+        "key": "",
+        "default": "1.00",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "evidence_required": {
+        "type": "tinyint(1)",
+        "nullable": true,
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "evidence": {
+        "type": "text",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "done_at": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      },
+      "task_type": {
+        "type": "enum('kpi','revenue')",
+        "nullable": true,
+        "key": "",
+        "default": "kpi",
+        "extra": "",
+        "enumValues": [
+          "kpi",
+          "revenue"
+        ],
+        "setValues": null
+      },
+      "revenue_value": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "start_date": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "attendance": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "user_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "date": {
+        "type": "date",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "check_in": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "check_out": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "work_hours": {
+        "type": "decimal(5,2)",
+        "nullable": true,
+        "key": "",
+        "default": "0.00",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "ot_hours": {
+        "type": "decimal(5,2)",
+        "nullable": true,
+        "key": "",
+        "default": "0.00",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "late_minutes": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "shift": {
+        "type": "enum('office','morning','afternoon','night')",
+        "nullable": true,
+        "key": "",
+        "default": "office",
+        "extra": "",
+        "enumValues": [
+          "office",
+          "morning",
+          "afternoon",
+          "night"
+        ],
+        "setValues": null
+      },
+      "note": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "payrolls": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "period": {
+        "type": "varchar(20)",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "user_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "salary_base": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "work_pay": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "ot_pay": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "allowances": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "kpi_bonus": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "other_bonus": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "bhxh_deduction": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "union_fee": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "pit_tax": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "advance_payment": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "other_deduction": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "net_salary": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "status": {
+        "type": "enum('draft','approved','paid')",
+        "nullable": true,
+        "key": "",
+        "default": "draft",
+        "extra": "",
+        "enumValues": [
+          "draft",
+          "approved",
+          "paid"
+        ],
+        "setValues": null
+      },
+      "approved_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "approved_at": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "paid_at": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "note": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "costs": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "date": {
+        "type": "date",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "category": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "amount": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "payment_method": {
+        "type": "enum('cash','transfer')",
+        "nullable": true,
+        "key": "",
+        "default": "transfer",
+        "extra": "",
+        "enumValues": [
+          "cash",
+          "transfer"
+        ],
+        "setValues": null
+      },
+      "invoice_no": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "description": {
+        "type": "text",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "source": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "marketing": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "title": {
+        "type": "varchar(255)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "channel": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "budget": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "spent": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "start_date": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "end_date": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "kpi_target": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "result": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "assets": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "code": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "serial_no": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "name": {
+        "type": "varchar(255)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "brand": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "purchase_date": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "price": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "warranty_until": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "depreciation": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": "0",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "location": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "last_maintenance": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "next_maintenance": {
+        "type": "date",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "status": {
+        "type": "enum('active','broken','maintenance')",
+        "nullable": true,
+        "key": "",
+        "default": "active",
+        "extra": "",
+        "enumValues": [
+          "active",
+          "broken",
+          "maintenance"
+        ],
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "shift_reports": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "work_order_id": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "team_id": {
+        "type": "varchar(20)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "day": {
+        "type": "date",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "shift": {
+        "type": "enum('morning','afternoon','night')",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "morning",
+          "afternoon",
+          "night"
+        ],
+        "setValues": null
+      },
+      "good_qty": {
+        "type": "decimal(15,3)",
+        "nullable": true,
+        "key": "",
+        "default": "0.000",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "scrap_qty": {
+        "type": "decimal(15,3)",
+        "nullable": true,
+        "key": "",
+        "default": "0.000",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "downtime_min": {
+        "type": "decimal(15,2)",
+        "nullable": true,
+        "key": "",
+        "default": "0.00",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "qc_result": {
+        "type": "enum('pass','fail','rework')",
+        "nullable": true,
+        "key": "",
+        "default": "pass",
+        "extra": "",
+        "enumValues": [
+          "pass",
+          "fail",
+          "rework"
+        ],
+        "setValues": null
+      },
+      "created_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "incidents": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "code": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "user_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "MUL",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "violation_codes": {
+        "type": "json",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "status": {
+        "type": "enum('new','pending_explanation','explained','approved','rejected','closed')",
+        "nullable": true,
+        "key": "",
+        "default": "new",
+        "extra": "",
+        "enumValues": [
+          "new",
+          "pending_explanation",
+          "explained",
+          "approved",
+          "rejected",
+          "closed"
+        ],
+        "setValues": null
+      },
+      "evidence": {
+        "type": "text",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "explanation": {
+        "type": "text",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "decision_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "decision_note": {
+        "type": "text",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "decision_at": {
+        "type": "datetime",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "sop_docs": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "code": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "UNI",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "title": {
+        "type": "varchar(255)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "steps": {
+        "type": "text",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "owner": {
+        "type": "varchar(100)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "tags": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "visibility": {
+        "type": "enum('public','internal')",
+        "nullable": true,
+        "key": "",
+        "default": "public",
+        "extra": "",
+        "enumValues": [
+          "public",
+          "internal"
+        ],
+        "setValues": null
+      },
+      "approved": {
+        "type": "tinyint(1)",
+        "nullable": true,
+        "key": "",
+        "default": "1",
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_by": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      },
+      "updated_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "audit_logs": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "user_id": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "action": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "resource": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "ref_id": {
+        "type": "int",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "before_data": {
+        "type": "json",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "after_data": {
+        "type": "json",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "note": {
+        "type": "varchar(255)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "ip": {
+        "type": "varchar(50)",
+        "nullable": true,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  },
+  "ai_conversations": {
+    "exists": true,
+    "columns": {
+      "id": {
+        "type": "int",
+        "nullable": false,
+        "key": "PRI",
+        "default": null,
+        "extra": "auto_increment",
+        "enumValues": null,
+        "setValues": null
+      },
+      "user_id": {
+        "type": "int",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "session_id": {
+        "type": "varchar(50)",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "role": {
+        "type": "enum('user','assistant','summary')",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": [
+          "user",
+          "assistant",
+          "summary"
+        ],
+        "setValues": null
+      },
+      "content": {
+        "type": "text",
+        "nullable": false,
+        "key": "",
+        "default": null,
+        "extra": "",
+        "enumValues": null,
+        "setValues": null
+      },
+      "created_at": {
+        "type": "timestamp",
+        "nullable": true,
+        "key": "",
+        "default": "CURRENT_TIMESTAMP",
+        "extra": "DEFAULT_GENERATED",
+        "enumValues": null,
+        "setValues": null
+      }
+    }
+  }
+}
