@@ -6,10 +6,10 @@
 // Bỏ comment 1 trong 2 dòng dưới để chọn môi trường:
 
 // --- Môi trường LOCAL ---
-const BASE_URL = 'http://localhost:3000/api';
+//const BASE_URL = 'http://localhost:3000/api';
 
 // --- Môi trường RENDER (production) ---
-//const BASE_URL = 'https://newsunny.onrender.com/api';
+const BASE_URL = 'https://newsunny.onrender.com/api';
 
 const api = axios.create({ 
   baseURL: BASE_URL 
